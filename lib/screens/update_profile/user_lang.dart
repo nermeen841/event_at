@@ -69,7 +69,7 @@ class _UserLanguageScreenState extends State<UserLanguageScreen> {
                       child: SizedBox(
                         width: w * 0.3,
                         child: Image.asset(
-                          "assets/images/logo_multi.png",
+                          "assets/eventat-logo.png",
                           fit: BoxFit.contain,
                         ),
                       ),

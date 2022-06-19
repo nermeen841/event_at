@@ -94,7 +94,7 @@ class _LoginState extends State<Login> {
                                       ),
                                       Center(
                                           child: Image.asset(
-                                        "assets/images/multi-app.png",
+                                        "assets/eventat-logo.png",
                                         width: w * 0.6,
                                         height: h * 0.2,
                                         fit: BoxFit.contain,

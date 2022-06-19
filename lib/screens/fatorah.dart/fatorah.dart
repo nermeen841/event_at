@@ -74,8 +74,8 @@ class _FatorahScreenState extends State<FatorahScreen> {
                           height: h * 0.015,
                         ),
                         Text(
-                          translateString("Thank you for shopping from Multi",
-                              "شكرا لتسوقكم من مالتي"),
+                          translateString("Thank you for shopping from Eventat",
+                              "شكرا لتسوقكم من إيفنتات"),
                           style: TextStyle(
                               fontFamily: 'Tajawal',
                               fontWeight: FontWeight.w500,
