@@ -25,7 +25,7 @@ class ImageeNetworkWidget extends StatelessWidget {
       fit: fit,
       placeholder: (context, url) => Center(
         child: Image.asset(
-          "assets/images/logo_multi.png",
+          "assets/eventat-logo.png",
           height: (height ?? 100) / 2,
           width: (width ?? 100) / 2,
           fit: BoxFit.scaleDown,
@@ -34,7 +34,7 @@ class ImageeNetworkWidget extends StatelessWidget {
       //logo_multi
       errorWidget: (context, url, error) => Center(
         child: Image.asset(
-          "assets/images/logo_multi.png",
+          "assets/eventat-logo.png",
           height: (height ?? 100) / 2,
           width: (width ?? 100) / 2,
           fit: BoxFit.scaleDown,
@@ -69,7 +69,7 @@ class RoundedImageeNetworkWidget extends StatelessWidget {
       ),
       placeholder: (context, url) => Center(
         child: Image.asset(
-          "assets/images/logo_multi.png",
+          "assets/eventat-logo.png",
           height: (height ?? 100) / 2,
           width: (width ?? 100) / 2,
           fit: BoxFit.scaleDown,
@@ -77,7 +77,7 @@ class RoundedImageeNetworkWidget extends StatelessWidget {
       ),
       errorWidget: (context, url, error) => Center(
         child: Image.asset(
-          "assets/images/logo_multi.png",
+          "assets/eventat-logo.png",
           height: (height ?? 100) / 2,
           width: (width ?? 100) / 2,
           fit: BoxFit.scaleDown,
