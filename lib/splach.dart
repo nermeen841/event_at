@@ -101,29 +101,30 @@ class _SplachState extends State<Splach> {
     print([1, Navigator.canPop(context)]);
     return PreferredSize(
       preferredSize: Size(w, h),
-      child: Container(
-        height: h,
-        width: w,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/splash_cover.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      // child: Container(
+      //   height: h,
+      //   width: w,
+      //   decoration: const BoxDecoration(
+      //     image: DecorationImage(
+      //       image: AssetImage('assets/images/splash_cover.png'),
+      //       fit: BoxFit.cover,
+      //     ),
+      //   ),
         child: Scaffold(
           backgroundColor: Colors.white.withOpacity(0.85),
           body: Container(
         height: h,
         width: w,
         decoration: const BoxDecoration(
+          // 'assets/images/splash_content.png'
           image: DecorationImage(
-            image: AssetImage('assets/images/splash_content.png'),
+            image: AssetImage("assets/images/event_splash.png"),
             fit: BoxFit.cover,
           ),
         ),
         ),
         ),
-      ),
+      // ),
     );
   }
 }
