@@ -1665,7 +1665,7 @@ SizedBox(
                             ),
                             SizedBox(
                               width: w,
-                              height: h*0.3,
+                              height: h*0.4,
                               child: ListView.builder(
                                 itemCount: bestDis.length,
                                 scrollDirection: Axis.horizontal,
@@ -1680,64 +1680,55 @@ SizedBox(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Expanded(
-                                            child: Container(
-                                              width: w * 0.55,
-                                              height: h * 0.25,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[200],
+                                          Stack(
+                                            children: [
+                                              ImageeNetworkWidget(
+                                                fit: BoxFit.cover,
+                                                image: bestDis[i].image,
+                                                width: w * 0.5,
+                                               height: h * 0.3,
                                               ),
-                                              child: Stack(
-                                                children: [
-                                                  ImageeNetworkWidget(
-                                                    fit: BoxFit.cover,
-                                                    image: bestDis[i].image,
-                                                    width: w * 0.9,
-                                                    height: h * 0.25,
-                                                  ),
-                                                  // (bestDis[i].isOrder == 1)
-                                                  //     ? Container(
-                                                  //         height: h * 0.04,
-                                                  //         width: w * 0.22,
-                                                  //         margin: EdgeInsets
-                                                  //             .symmetric(
-                                                  //                 horizontal:
-                                                  //                     w * 0.01,
-                                                  //                 vertical:
-                                                  //                     h * 0.01),
-                                                  //         decoration:
-                                                  //             BoxDecoration(
-                                                  //           color: mainColor,
-                                                  //           borderRadius:
-                                                  //               BorderRadius
-                                                  //                   .circular(w *
-                                                  //                       0.02),
-                                                  //         ),
-                                                  //         child: Center(
-                                                  //           child: Text(
-                                                  //             translateString(
-                                                  //                 "Order",
-                                                  //                 "علي الطلب"),
-                                                  //             style: TextStyle(
-                                                  //                 fontFamily:
-                                                  //                     'Tajawal',
-                                                  //                 fontSize:
-                                                  //                     w * 0.04,
-                                                  //                 color: Colors
-                                                  //                     .white,
-                                                  //                 fontWeight:
-                                                  //                     FontWeight
-                                                  //                         .w500),
-                                                  //           ),
-                                                  //         ),
-                                                  //       )
-                                                  //     : const SizedBox(),
-                                                ],
-                                              ),
-                                            ),
+                                              // (bestDis[i].isOrder == 1)
+                                              //     ? Container(
+                                              //         height: h * 0.04,
+                                              //         width: w * 0.22,
+                                              //         margin: EdgeInsets
+                                              //             .symmetric(
+                                              //                 horizontal:
+                                              //                     w * 0.01,
+                                              //                 vertical:
+                                              //                     h * 0.01),
+                                              //         decoration:
+                                              //             BoxDecoration(
+                                              //           color: mainColor,
+                                              //           borderRadius:
+                                              //               BorderRadius
+                                              //                   .circular(w *
+                                              //                       0.02),
+                                              //         ),
+                                              //         child: Center(
+                                              //           child: Text(
+                                              //             translateString(
+                                              //                 "Order",
+                                              //                 "علي الطلب"),
+                                              //             style: TextStyle(
+                                              //                 fontFamily:
+                                              //                     'Tajawal',
+                                              //                 fontSize:
+                                              //                     w * 0.04,
+                                              //                 color: Colors
+                                              //                     .white,
+                                              //                 fontWeight:
+                                              //                     FontWeight
+                                              //                         .w500),
+                                              //           ),
+                                              //         ),
+                                              //       )
+                                              //     : const SizedBox(),
+                                            ],
                                           ),
                                           SizedBox(
-                                            width: w * 0.4,
+                                            width: w * 0.44,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment:
@@ -1862,7 +1853,7 @@ SizedBox(
                             ),
                           ],
                         ),
-                      SizedBox(height: h * 0.01),
+                    
                       // if (reItem.isNotEmpty)
                       //   Column(
                       //     children: [
@@ -3709,7 +3700,7 @@ SizedBox(
                       //     ],
                       //   ),
                       SizedBox(
-                        height: h * 0.03,
+                        height: h * 0.04,
                       ),
                     ],
                   ),
