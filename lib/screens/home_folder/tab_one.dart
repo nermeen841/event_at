@@ -1748,6 +1748,8 @@ SizedBox(
                                                             bestDis[i].nameAr),
                                                         maxLines: 2,
                                                         style: TextStyle(
+                                                          fontFamily:
+                                                                        'Tajawal',
                                                             fontSize:
                                                                 w * 0.035),
                                                         overflow: TextOverflow

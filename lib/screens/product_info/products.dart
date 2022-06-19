@@ -1804,7 +1804,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                               .brandName
                                                               .toString()
                                                           : translateString(
-                                                              'Event At', 'ايفينت ات'),
+                                                              'EventAt', 'ايفينتات'),
                                                   style:
                                                       TextStyle(
                                                           fontWeight:
@@ -2570,7 +2570,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                 width: w * 0.02,
                                               ),
                                               Text(
-                                                '${translate(context, 'product', 'why')} Event At',
+                                                '${translate(context, 'product', 'why')} ${translateString("Eventat", "إيفنتات")}',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: w * 0.045,

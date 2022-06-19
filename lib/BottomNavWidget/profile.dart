@@ -72,8 +72,8 @@ class _ProfileState extends State<Profile> {
               image: 'assets/images/Group 1098.png',
               className: ContactUs()),
           Tile(
-              nameAr: 'عن ايفينت',
-              nameEn: 'About Event at',
+              nameAr: 'عن ايفنتات',
+              nameEn: 'About Eventat',
               image: 'assets/images/Group 1095.png',
               className: const AboutMultiScreen()),
           Tile(
@@ -118,8 +118,8 @@ class _ProfileState extends State<Profile> {
               image: 'assets/images/Group 1098.png',
               className: ContactUs()),
           Tile(
-              nameAr: 'عن ايفينت',
-              nameEn: 'About Event at',
+                 nameAr: 'عن ايفنتات',
+              nameEn: 'About Eventat',
               image: 'assets/images/Group 1095.png',
               className: const AboutMultiScreen()),
           Tile(
@@ -681,7 +681,7 @@ class _ProfileState extends State<Profile> {
                                   }
                                 } else if (tile[i].nameEn == 'Share App') {
                                   // navPRRU(context, const Country(1));
-                                } else if (tile[i].nameEn == 'About Event at') {
+                                } else if (tile[i].nameEn == 'About Eventat') {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

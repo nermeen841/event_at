@@ -29,8 +29,8 @@ class _AboutMultiScreenState extends State<AboutMultiScreen> {
         image: 'assets/images/Group 1100.png',
         className: AboutUs('Privacy Policy')),
     Tile(
-        nameAr: "عن  ايفينت ",
-        nameEn: "About Event at",
+        nameAr: "عن  ايفينتات",
+        nameEn: "About Eventat",
         keyApi: 'about',
         image: 'assets/images/Group 1095.png',
         className: AboutUs('About Us')),
@@ -52,7 +52,7 @@ class _AboutMultiScreenState extends State<AboutMultiScreen> {
           automaticallyImplyLeading: false,
           elevation: 0.0,
           title: Text(
-            translateString("About Event at", "عن ايفينت "),
+            translateString("About Eventat", "عن ايفينتات"),
             style: TextStyle(
                 fontSize: w * 0.05,
                 fontFamily: 'Tajawal',
