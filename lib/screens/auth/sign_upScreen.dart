@@ -341,6 +341,27 @@ class _SignupScreenState extends State<SignupScreen> {
             focusNode2.unfocus();
             FocusScope.of(context).requestFocus(focusNode3);
           },
+          validator: (value) {
+            if (value!.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(translate(context, 'validation', 'field'))));
+              _btnController.error();
+              Future.delayed(const Duration(seconds: 1));
+              _btnController.stop();
+            }else {
+              if(!value.contains("@") || !value.contains(".com") ){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(translateString('Email is invalid', 'البريد الإلكتروني غير صالح'))));
+              _btnController.error();
+              Future.delayed(const Duration(seconds: 1));
+              _btnController.stop();
+
+              }
+
+            }
+
+            return null;
+          },
           decoration: InputDecoration(
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -516,4 +537,3 @@ InputBorder form() {
     borderRadius: BorderRadius.circular(w * 0.8),
   );
 }
-
