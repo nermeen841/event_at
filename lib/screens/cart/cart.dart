@@ -600,7 +600,7 @@ class _CartState extends State<Cart> {
                                         String des = '';
                                         for (var e in _pro.des) {
                                           if (e != '') {
-                                            des += e + ',';
+                                            des += e + '\n';
                                           }
                                         }
                                         if (des.endsWith(',')) {
@@ -716,7 +716,7 @@ class _CartState extends State<Cart> {
                                                       width: w * 0.03,
                                                     ),
                                                     SizedBox(
-                                                      height: h * 0.13,
+                                                      height: h * 0.2,
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -751,6 +751,7 @@ class _CartState extends State<Cart> {
                                                                 fontSize:
                                                                     w * 0.035),
                                                           ),
+
                                                           Container(
                                                             height: h * 0.07,
                                                             decoration:
@@ -939,6 +940,7 @@ class _CartState extends State<Cart> {
                                                         ],
                                                       ),
                                                     ),
+
                                                   ],
                                                 ),
                                               ),
@@ -955,6 +957,7 @@ class _CartState extends State<Cart> {
                                       }),
                                     ),
                                   ),
+                                  SizedBox(height: h*0.02,),
                                   Container(
                                     height: h * 0.02,
                                     width: w,

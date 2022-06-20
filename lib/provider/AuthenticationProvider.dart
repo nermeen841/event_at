@@ -13,14 +13,16 @@ import 'package:davinshi_app/models/user.dart';
 import 'package:davinshi_app/provider/address.dart';
 import 'package:davinshi_app/provider/cart_provider.dart';
 import 'package:davinshi_app/provider/home.dart';
-import 'package:davinshi_app/screens/auth/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../screens/home_folder/home_page.dart';
 
 class AuthenticationProvider {
   static Future<bool> userLogin(
       {required String email,
       required String password,
+      required RoundedLoadingButtonController controller,
       required BuildContext context}) async {
     final String url = domain + 'login';
     Response response = await Dio().post(
@@ -74,6 +76,9 @@ class AuthenticationProvider {
       return true;
     } else {
       if (response.statusCode == 200 && response.data['status'] == 0) {
+        controller.error();
+        await Future.delayed(const Duration(seconds: 1));
+        controller.stop();
         final snackBar = SnackBar(
           content: Text(response.data['message']),
           action: SnackBarAction(
@@ -154,17 +159,26 @@ class AuthenticationProvider {
             gender: userData['data']['user']['gender'],
             birthday: userData['data']['user']['birth_day'],
           );
-          await prefs.setInt('id', userData['data']['user']['id']);
-          await prefs.setString('auth', userData['data']['token'].toString());
           userName = userData['data']['user']['name'];
           userEmail = userData['data']['user']['email'];
           userPhone = userData['data']['user']['phone'];
           gender = userData['data']['user']['gender'];
           familyName = userData['data']['user']['surname'];
+          await prefs.setInt('id', userData['data']['user']['id']);
+          await prefs.setString('auth', userData['data']['token'].toString());
+          setAuth(userData['data']['token']);
           await HomeProvider().getHomeItems();
           setUserId(userData['data']['user']['id']);
           dbHelper.deleteAll();
-          fireSms(context, phone.text, controller);
+          await prefs.setBool('login', true);
+          setLogin(true);
+          Provider.of<CartProvider>(context, listen: false).clearAll();
+          cartId = null;
+          Provider.of<BottomProvider>(context, listen: false).setIndex(0);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+              (route) => false);
         } catch (e) {
           print("register errrrrooooooooooooooooorrrr" + e.toString());
         }

@@ -193,7 +193,7 @@ class _ContactUsState extends State<ContactUs> {
                               decoration: InputDecoration(
                                 focusedBorder: form(),
                                 enabledBorder: form(),
-                                errorBorder: form(),
+                                errorBorder: errorform(),
                                 focusedErrorBorder: form(),
                                 hintText: _hint[index],
                                 hintStyle: TextStyle(color: Colors.grey[400]),
@@ -400,6 +400,13 @@ class _ContactUsState extends State<ContactUs> {
     return OutlineInputBorder(
       borderSide: const BorderSide(color: Colors.black, width: 1.5),
       borderRadius: BorderRadius.circular(w * 0.03),
+    );
+  }
+  
+  InputBorder errorform() {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: colorRed_1, width: 1.5),
+      borderRadius: BorderRadius.circular(15),
     );
   }
 }

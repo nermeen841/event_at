@@ -1777,44 +1777,46 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: h * 0.015),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: translate(context,
-                                                      'home', 'seller_name'),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.black,
-                                                      fontSize: w * 0.035)),
-                                              TextSpan(
-                                                  text: (productCla!
-                                                              .sellerName !=
-                                                          null)
-                                                      ? productCla!.sellerName
-                                                          .toString()
-                                                      : (productCla!
-                                                                  .brandName !=
-                                                              null)
-                                                          ? productCla!
-                                                              .brandName
-                                                              .toString()
-                                                          : translateString(
-                                                              'EventAt', 'ايفينتات'),
-                                                  style:
-                                                      TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.black,
-                                                          fontSize: w * 0.035)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      
+                                      // Padding(
+                                      //   padding: EdgeInsets.symmetric(
+                                      //       horizontal: h * 0.015),
+                                      //   child: RichText(
+                                      //     text: TextSpan(
+                                      //       children: [
+                                      //         TextSpan(
+                                      //             text: translate(context,
+                                      //                 'home', 'seller_name'),
+                                      //             style: TextStyle(
+                                      //                 fontWeight:
+                                      //                     FontWeight.w600,
+                                      //                 color: Colors.black,
+                                      //                 fontSize: w * 0.035)),
+                                      //         TextSpan(
+                                      //             text: (productCla!
+                                      //                         .sellerName !=
+                                      //                     null)
+                                      //                 ? productCla!.sellerName
+                                      //                     .toString()
+                                      //                 : (productCla!
+                                      //                             .brandName !=
+                                      //                         null)
+                                      //                     ? productCla!
+                                      //                         .brandName
+                                      //                         .toString()
+                                      //                     : translateString(
+                                      //                         'EventAt', 'ايفينتات'),
+                                      //             style:
+                                      //                 TextStyle(
+                                      //                     fontWeight:
+                                      //                         FontWeight.w600,
+                                      //                     color: Colors.black,
+                                      //                     fontSize: w * 0.035)),
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      
                                       // (productCla!.isOrder == 1)
                                       //     ? SizedBox(
                                       //         height: h * 0.01,
@@ -1846,7 +1848,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                       //       )
                                       //     : const SizedBox(),
                                       SizedBox(
-                                        height: h * 0.04,
+                                        height: h * 0.02,
                                       ),
                                       (productCla!.quantity == 0)
                                           ? Padding(

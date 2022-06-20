@@ -26,8 +26,7 @@ class UserClass {
       required this.birthday,
       required this.email});
 }
-
-late UserClass user;
+ UserClass? user;
 int userId = 0;
 late String auth;
 bool login = false;

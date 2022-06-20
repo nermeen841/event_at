@@ -281,7 +281,7 @@ class _AddressInfoState extends State<AddressInfo> {
                                   decoration: InputDecoration(
                                     focusedBorder: form(),
                                     enabledBorder: form(),
-                                    errorBorder: form(),
+                                    errorBorder: errorform(),
                                     focusedErrorBorder: form(),
                                     hintText: _hint[index],
                                     hintStyle:
@@ -450,6 +450,13 @@ class _AddressInfoState extends State<AddressInfo> {
   InputBorder form() {
     return OutlineInputBorder(
       borderSide: BorderSide(color: mainColor, width: 1.5),
+      borderRadius: BorderRadius.circular(15),
+    );
+  }
+
+   InputBorder errorform() {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: colorRed_1, width: 1.5),
       borderRadius: BorderRadius.circular(15),
     );
   }

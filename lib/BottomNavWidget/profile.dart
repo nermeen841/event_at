@@ -197,6 +197,9 @@ class _ProfileState extends State<Profile> {
           userPhone = userData['phone'];
           userEmail = userData['email'];
           userImage = userData['user']['img'];
+          gender = userData['gender'];
+          familyName = userData['surname'];
+          birthday = userData['birth_day'];
         });
       }
     } catch (e) {}
@@ -221,6 +224,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     getProfile();
+     print(userName);
     super.initState();
   }
 

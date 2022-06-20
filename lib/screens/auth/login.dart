@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
             height: h,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/Bitmap-1.png"),
+                    image: AssetImage("assets/images/splash_cover.png"),
                     fit: BoxFit.fill)),
           ),
           Form(
@@ -56,10 +56,11 @@ class _LoginState extends State<Login> {
                       body: Container(
                           width: w,
                           height: h,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/Rectangle.png"),
-                                  fit: BoxFit.fill)),
+                          // decoration: const BoxDecoration(
+                          //      image: DecorationImage(
+                          //         image: AssetImage("assets/Rectangle.png"),
+                          //          fit: BoxFit.fill)
+                          //         ),
                           padding: EdgeInsets.only(top: h * 0.07),
                           child: SingleChildScrollView(
                             child: Column(
@@ -378,6 +379,8 @@ class _LoginState extends State<Login> {
                                                   if (_formKey.currentState!
                                                       .validate()) {
                                                     AuthenticationProvider.userLogin(
+                                                            controller:
+                                                                _btnController,
                                                             email:
                                                                 editingController1
                                                                     .text,

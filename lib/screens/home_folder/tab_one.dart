@@ -488,7 +488,7 @@ SizedBox(
                                           gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisSpacing: h * 0.03,
-                                        mainAxisSpacing: w * 0.01,
+                                        mainAxisSpacing: w * 0.05,
                                         crossAxisCount: 2,
                                         childAspectRatio: 0.9),
                                       primary: false,
@@ -550,10 +550,6 @@ SizedBox(
                                                            begin: Alignment.bottomCenter,
                                                           colors: [
                                                            Colors.black,
-                                                          //  Colors.black.withOpacity(0.5),
-                                                          //  Colors.black.withOpacity(0.3),
-                                                          //  Colors.black.withOpacity(0.2),
-                                                          //  Colors.black.withOpacity(0.1),
                                                            Colors.transparent,
                                                            Colors.transparent,
 

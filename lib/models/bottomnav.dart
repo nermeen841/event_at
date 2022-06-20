@@ -22,5 +22,7 @@ Color white_f8 = const Color(0xffF8F8F8);
 Color grey_17 = const Color(0xff00000017);
 Color grey_70 = const Color(0xff707070);
 Color white_5 = const Color(0xffFFFFFF05);
+Color colorRed_1 = const Color(0xffFF0000);
+Color colorRed_2 = const Color(0xffFF0921);
 
 
