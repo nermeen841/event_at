@@ -15,11 +15,11 @@ SystemUiOverlayStyle st = const SystemUiOverlayStyle(
   statusBarBrightness: Brightness.light,
 );
 String domain = 
-"https://multi-kw.com/api/V1/";
-// 'https://davinshi.net/api/V1/';
-String imagePath = 'https://multi-kw.com/assets/images/products/min/';
-String imagePath2 = 'https://multi-kw.com/assets/images/products/gallery/';
-String imagePathCat = 'https://multi-kw.com/assets/images/categories/';
+// "https://multi-kw.com/api/V1/";
+'https://davinshi.net/api/V1/';
+String imagePath = 'https://davinshi.net/assets/images/products/min/';
+String imagePath2 = 'https://davinshi.net/assets/images/products/gallery/';
+String imagePathCat = 'https://davinshi.net/assets/images/categories/';
 String language = 'en';
 String getCurrancy() {
   return prefs.getStringList("currency").toString();
