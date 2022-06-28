@@ -983,13 +983,13 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                       idp: productCla!.id,
                                                       productOptions:
                                                           optionsQuantity,
-                                                      idc: productCla!.cat.id,
+                                                      idc: productCla!.cat.id!,
                                                       catNameEn: productCla!
-                                                          .cat.nameEn,
+                                                          .cat.nameEn!,
                                                       catNameAr: productCla!
-                                                          .cat.nameAr,
+                                                          .cat.nameAr!,
                                                       catSVG:
-                                                          productCla!.cat.svg));
+                                                          productCla!.cat.svg!));
                                             }
                                           } else {
                                             int quantity = cart.items
@@ -1064,13 +1064,13 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                       att: att,
                                                       des: des,
                                                       idp: productCla!.id,
-                                                      idc: productCla!.cat.id,
+                                                      idc: productCla!.cat.id!,
                                                       catNameEn: productCla!
-                                                          .cat.nameEn,
+                                                          .cat.nameEn!,
                                                       catNameAr: productCla!
-                                                          .cat.nameAr,
+                                                          .cat.nameAr!,
                                                       catSVG:
-                                                          productCla!.cat.svg));
+                                                          productCla!.cat.svg!));
                                             }
                                           }
                                           await cart.setItems().then((value) {
@@ -1095,12 +1095,12 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                 att: att,
                                                 des: des,
                                                 idp: productCla!.id,
-                                                idc: productCla!.cat.id,
+                                                idc: productCla!.cat.id!,
                                                 catNameEn:
-                                                    productCla!.cat.nameEn,
+                                                    productCla!.cat.nameEn!,
                                                 catNameAr:
-                                                    productCla!.cat.nameAr,
-                                                catSVG: productCla!.cat.svg));
+                                                    productCla!.cat.nameAr!,
+                                                catSVG: productCla!.cat.svg!));
                                           } else {
                                             int quantity = cart.items
                                                 .firstWhere((element) =>
@@ -1161,13 +1161,13 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                       att: att,
                                                       des: des,
                                                       idp: productCla!.id,
-                                                      idc: productCla!.cat.id,
+                                                      idc: productCla!.cat.id!,
                                                       catNameEn: productCla!
-                                                          .cat.nameEn,
+                                                          .cat.nameEn!,
                                                       catNameAr: productCla!
-                                                          .cat.nameAr,
+                                                          .cat.nameAr!,
                                                       catSVG:
-                                                          productCla!.cat.svg));
+                                                          productCla!.cat.svg!));
                                             } else {
                                               int quantity = cart.items
                                                   .firstWhere((element) =>
@@ -1243,13 +1243,13 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                         att: att,
                                                         des: des,
                                                         idp: productCla!.id,
-                                                        idc: productCla!.cat.id,
+                                                        idc: productCla!.cat.id!,
                                                         catNameEn: productCla!
-                                                            .cat.nameEn,
+                                                            .cat.nameEn!,
                                                         catNameAr: productCla!
-                                                            .cat.nameAr,
+                                                            .cat.nameAr!,
                                                         catSVG: productCla!
-                                                            .cat.svg));
+                                                            .cat.svg!));
                                               }
                                             }
                                             await cart.setItems().then((value) {
@@ -1344,15 +1344,15 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                                             des: des,
                                                             idp: productCla!.id,
                                                             idc: productCla!
-                                                                .cat.id,
+                                                                .cat.id!,
                                                             catNameEn:
                                                                 productCla!
-                                                                    .cat.nameEn,
+                                                                    .cat.nameEn!,
                                                             catNameAr:
                                                                 productCla!
-                                                                    .cat.nameAr,
+                                                                    .cat.nameAr!,
                                                             catSVG: productCla!
-                                                                .cat.svg));
+                                                                .cat.svg!));
                                                   } else {
                                                     int quantity = cart.items
                                                         .firstWhere((element) =>
@@ -1405,10 +1405,10 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                           att: att,
                                           des: des,
                                           idp: productCla!.id,
-                                          idc: productCla!.cat.id,
-                                          catNameEn: productCla!.cat.nameEn,
-                                          catNameAr: productCla!.cat.nameAr,
-                                          catSVG: productCla!.cat.svg));
+                                          idc: productCla!.cat.id!,
+                                          catNameEn: productCla!.cat.nameEn!,
+                                          catNameAr: productCla!.cat.nameAr!,
+                                          catSVG: productCla!.cat.svg!));
                                     } else {
                                       int quantity = cart.items
                                           .firstWhere((element) =>

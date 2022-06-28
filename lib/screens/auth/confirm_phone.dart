@@ -1,5 +1,6 @@
 // ignore_for_file: body_might_complete_normally_nullable
 
+import 'package:davinshi_app/screens/auth/pin_code.dart';
 import 'package:davinshi_app/screens/auth/sign_upScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,7 +51,13 @@ class _ConfirmPhoneState extends State<ConfirmPhone> {
       if (response.data['status'] == 1) {
         Map userData = response.data['data'];
         id = userData['id'];
-        fireSms(context, _controller.text, _btnController);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VerificationCodeScreen(
+                      userId: userData['id'],
+                    )));
+        // fireSms(context, _controller.text, _btnController);
       }
     } catch (e) {
       _btnController.error();
@@ -59,191 +66,191 @@ class _ConfirmPhoneState extends State<ConfirmPhone> {
     }
   }
 
-  Future fireSms(context, String phone,
-      RoundedLoadingButtonController _btnController) async {
-    final TextEditingController sms = TextEditingController();
-    try {
-      String ph = countryCode + phone;
-      Future<PhoneVerificationFailed?> verificationFailed(
-          FirebaseAuthException authException) async {
-        _btnController.error();
-        await Future.delayed(const Duration(milliseconds: 1000));
-        _btnController.stop();
-        showBar(context, translate(context, 'fire_base', 'error1'));
-      }
+  // Future fireSms(context, String phone,
+  //     RoundedLoadingButtonController _btnController) async {
+  //   final TextEditingController sms = TextEditingController();
+  //   try {
+  //     String ph = countryCode + phone;
+  //     Future<PhoneVerificationFailed?> verificationFailed(
+  //         FirebaseAuthException authException) async {
+  //       _btnController.error();
+  //       await Future.delayed(const Duration(milliseconds: 1000));
+  //       _btnController.stop();
+  //       showBar(context, translate(context, 'fire_base', 'error1'));
+  //     }
 
-      Future<PhoneCodeAutoRetrievalTimeout?> autoTimeout(String varId) async {
-        verificationId = varId;
-        _btnController.stop();
-      }
+  //     Future<PhoneCodeAutoRetrievalTimeout?> autoTimeout(String varId) async {
+  //       verificationId = varId;
+  //       _btnController.stop();
+  //     }
 
-      await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: ph,
-          timeout: const Duration(seconds: 90),
-          verificationCompleted: (AuthCredential credential) async {
-            try {
-              var result =
-                  await FirebaseAuth.instance.signInWithCredential(credential);
-              var ha = result.user;
-              if (ha != null) {
-                _btnController.stop();
-                navPR(context, ResetPass(id: id));
-              }
-            } catch (e) {
-              _btnController.error();
-              await Future.delayed(const Duration(milliseconds: 1000));
-              _btnController.stop();
-              showBar(context, translate(context, 'fire_base', 'error2'));
-            }
-          },
-          verificationFailed: verificationFailed,
-          codeSent: (String verificationId, [int? forceResendingToken]) {
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (dialogContext) {
-                  return AlertDialog(
-                    title: Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          Navigator.pop(dialogContext);
-                        },
-                      ),
-                    ),
-                    titlePadding: const EdgeInsets.only(left: 0, bottom: 0),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    ),
-                    content: SizedBox(
-                      height: h * 30 / 100,
-                      child: Column(
-                        children: <Widget>[
-                          Align(
-                            child: Text(
-                              translate(context, 'sms', 'title'),
-                              style: TextStyle(
-                                  color: mainColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: w * 5 / 100),
-                            ),
-                            alignment: Alignment.center,
-                          ),
-                          SizedBox(
-                            height: h * 2 / 100,
-                          ),
-                          Directionality(
-                            textDirection: getDirection(),
-                            child: TextField(
-                              controller: sms,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  color: mainColor,
-                                ),
-                                border: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: translate(context, 'sms', 'hint'),
-                                contentPadding: EdgeInsets.zero,
-                                // prefixIcon: Icon(
-                                //   Icons.mail,
-                                //   color: mainColor,
-                                // ),
-                              ),
-                              keyboardType: TextInputType.text,
-                            ),
-                          ),
-                          SizedBox(
-                            height: h * 1.5 / 100,
-                          ),
-                          InkWell(
-                            child: Container(
-                              width: w * 30 / 100,
-                              height: h * 6 / 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(7),
-                                  color: Colors.black),
-                              child: Center(
-                                child: Text(
-                                  translate(context, 'buttons', 'send'),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: w * 4.5 / 100,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                            onTap: () async {
-                              if (sms.text != '') {
-                                try {
-                                  FocusScope.of(context).unfocus();
-                                  AuthCredential credential =
-                                      PhoneAuthProvider.credential(
-                                          verificationId: verificationId,
-                                          smsCode: sms.text);
-                                  var result = await FirebaseAuth.instance
-                                      .signInWithCredential(credential);
-                                  var ha = result.user;
-                                  if (ha != null) {
-                                    sms.text = '';
-                                    _btnController.stop();
-                                    Navigator.pop(dialogContext);
-                                    navPR(context, ResetPass(id: id));
-                                  }
-                                } catch (e) {
-                                  customError(
-                                      context,
-                                      translate(
-                                          context, 'fire_base', 'error2'));
+  //     await FirebaseAuth.instance.verifyPhoneNumber(
+  //         phoneNumber: ph,
+  //         timeout: const Duration(seconds: 90),
+  //         verificationCompleted: (AuthCredential credential) async {
+  //           try {
+  //             var result =
+  //                 await FirebaseAuth.instance.signInWithCredential(credential);
+  //             var ha = result.user;
+  //             if (ha != null) {
+  //               _btnController.stop();
+  //               navPR(context, ResetPass(id: id));
+  //             }
+  //           } catch (e) {
+  //             _btnController.error();
+  //             await Future.delayed(const Duration(milliseconds: 1000));
+  //             _btnController.stop();
+  //             showBar(context, translate(context, 'fire_base', 'error2'));
+  //           }
+  //         },
+  //         verificationFailed: verificationFailed,
+  //         codeSent: (String verificationId, [int? forceResendingToken]) {
+  //           showDialog(
+  //               context: context,
+  //               barrierDismissible: false,
+  //               builder: (dialogContext) {
+  //                 return AlertDialog(
+  //                   title: Align(
+  //                     alignment: Alignment.topLeft,
+  //                     child: IconButton(
+  //                       icon: const Icon(Icons.close),
+  //                       onPressed: () {
+  //                         Navigator.pop(dialogContext);
+  //                       },
+  //                     ),
+  //                   ),
+  //                   titlePadding: const EdgeInsets.only(left: 0, bottom: 0),
+  //                   shape: const RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  //                   ),
+  //                   content: SizedBox(
+  //                     height: h * 30 / 100,
+  //                     child: Column(
+  //                       children: <Widget>[
+  //                         Align(
+  //                           child: Text(
+  //                             translate(context, 'sms', 'title'),
+  //                             style: TextStyle(
+  //                                 color: mainColor,
+  //                                 fontWeight: FontWeight.bold,
+  //                                 fontSize: w * 5 / 100),
+  //                           ),
+  //                           alignment: Alignment.center,
+  //                         ),
+  //                         SizedBox(
+  //                           height: h * 2 / 100,
+  //                         ),
+  //                         Directionality(
+  //                           textDirection: getDirection(),
+  //                           child: TextField(
+  //                             controller: sms,
+  //                             decoration: InputDecoration(
+  //                               prefixIcon: Icon(
+  //                                 Icons.mail,
+  //                                 color: mainColor,
+  //                               ),
+  //                               border: OutlineInputBorder(
+  //                                   borderSide:
+  //                                       const BorderSide(color: Colors.black),
+  //                                   borderRadius: BorderRadius.circular(10)),
+  //                               hintText: translate(context, 'sms', 'hint'),
+  //                               contentPadding: EdgeInsets.zero,
+  //                               // prefixIcon: Icon(
+  //                               //   Icons.mail,
+  //                               //   color: mainColor,
+  //                               // ),
+  //                             ),
+  //                             keyboardType: TextInputType.text,
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           height: h * 1.5 / 100,
+  //                         ),
+  //                         InkWell(
+  //                           child: Container(
+  //                             width: w * 30 / 100,
+  //                             height: h * 6 / 100,
+  //                             decoration: BoxDecoration(
+  //                                 borderRadius: BorderRadius.circular(7),
+  //                                 color: Colors.black),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 translate(context, 'buttons', 'send'),
+  //                                 style: TextStyle(
+  //                                     color: Colors.white,
+  //                                     fontSize: w * 4.5 / 100,
+  //                                     fontWeight: FontWeight.bold),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                           onTap: () async {
+  //                             if (sms.text != '') {
+  //                               try {
+  //                                 FocusScope.of(context).unfocus();
+  //                                 AuthCredential credential =
+  //                                     PhoneAuthProvider.credential(
+  //                                         verificationId: verificationId,
+  //                                         smsCode: sms.text);
+  //                                 var result = await FirebaseAuth.instance
+  //                                     .signInWithCredential(credential);
+  //                                 var ha = result.user;
+  //                                 if (ha != null) {
+  //                                   sms.text = '';
+  //                                   _btnController.stop();
+  //                                   Navigator.pop(dialogContext);
+  //                                   navPR(context, ResetPass(id: id));
+  //                                 }
+  //                               } catch (e) {
+  //                                 customError(
+  //                                     context,
+  //                                     translate(
+  //                                         context, 'fire_base', 'error2'));
 
-                                  _btnController.error();
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 1000));
-                                  _btnController.stop();
-                                  // showBar(context, 'رمز التحقق غير صحيح', 'Verification code is wrong','العربية');
-                                }
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    contentPadding: EdgeInsets.only(
-                        top: 0,
-                        right: w * 2 / 100,
-                        left: w * 2 / 100,
-                        bottom: 0),
-                  );
-                }).then((value) {
-              _btnController.reset();
-            });
-          },
-          codeAutoRetrievalTimeout: autoTimeout);
-    } catch (e) {
-      // showBar(context, e, e);
-      _btnController.error();
-      await Future.delayed(const Duration(milliseconds: 1000));
-      _btnController.stop();
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(60)),
-                ),
-                content: SizedBox(
-                    height: h * 0.5,
-                    width: h / 3.5,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [Text(e.toString())],
-                      ),
-                    )),
-              ));
-    }
-  }
+  //                                 _btnController.error();
+  //                                 await Future.delayed(
+  //                                     const Duration(milliseconds: 1000));
+  //                                 _btnController.stop();
+  //                                 // showBar(context, 'رمز التحقق غير صحيح', 'Verification code is wrong','العربية');
+  //                               }
+  //                             }
+  //                           },
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   contentPadding: EdgeInsets.only(
+  //                       top: 0,
+  //                       right: w * 2 / 100,
+  //                       left: w * 2 / 100,
+  //                       bottom: 0),
+  //                 );
+  //               }).then((value) {
+  //             _btnController.reset();
+  //           });
+  //         },
+  //         codeAutoRetrievalTimeout: autoTimeout);
+  //   } catch (e) {
+  //     // showBar(context, e, e);
+  //     _btnController.error();
+  //     await Future.delayed(const Duration(milliseconds: 1000));
+  //     _btnController.stop();
+  //     showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //               shape: const RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.all(Radius.circular(60)),
+  //               ),
+  //               content: SizedBox(
+  //                   height: h * 0.5,
+  //                   width: h / 3.5,
+  //                   child: SingleChildScrollView(
+  //                     child: Column(
+  //                       children: [Text(e.toString())],
+  //                     ),
+  //                   )),
+  //             ));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +405,7 @@ class _ConfirmPhoneState extends State<ConfirmPhone> {
                                       fillColor: Colors.white,
                                       filled: true,
                                       hintText:
-                                          translate(context, 'inputs', 'phone'),
+                                          translate(context, 'inputs', 'email'),
                                       hintStyle:
                                           const TextStyle(color: Colors.grey),
                                       floatingLabelBehavior:

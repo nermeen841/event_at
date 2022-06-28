@@ -33,13 +33,13 @@ class StudentItemProvider extends ChangeNotifier {
 
   void sortList(int index, String id) {
     if (index == 0) {
-      items.clear();
+      // items.clear();
       getItems(id);
     } else if (index == 1) {
-      items.clear();
+      // items.clear();
       getItems(id);
     } else {
-      items.clear();
+      // items.clear();
       getItems(id);
     }
     sort = apiSort[index];

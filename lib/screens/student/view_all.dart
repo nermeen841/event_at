@@ -31,7 +31,7 @@ class _ViewAllState extends State<ViewAll> {
   bool f1 = true;
   bool isLoading = false;
   void start(context) {
-    var of1 = Provider.of<StudentProvider>(context, listen: true);
+    var of1 = Provider.of<StudentProvider>(context, listen: false);
     of1.getStudents().then((value) {
       isLoading = true;
     });

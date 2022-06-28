@@ -38,7 +38,7 @@ class _StudentInfo extends State<StudentInfo> {
 
   void start(context) {
     studentId = widget.studentClass.id;
-    var of1 = Provider.of<StudentItemProvider>(context, listen: true);
+    var of1 = Provider.of<StudentItemProvider>(context, listen: false);
     of1.getItems(widget.studentClass.id).then((value) {
       isLoading = true;
     });
@@ -157,30 +157,49 @@ class _StudentInfo extends State<StudentInfo> {
                           SizedBox(
                             height: h * 0.02,
                           ),
-                          row(
+                             row(
                               w,
-                              'assets/facebook.svg',
-                              'assets/inst.svg',
+                              'assets/facebook-logo.png',
+                              'assets/instagram.png',
                               widget.studentClass.facebook ?? 'Empty',
-                              widget.studentClass.instagram ?? 'Empty'),
+                              widget.studentClass.instagram ?? 'Empty',
+                              () async {
+                            await launch(widget.studentClass.facebook);
+                          }, () async {
+                            await launch(widget.studentClass.instagram);
+                          }),
                           SizedBox(
                             height: h * 0.03,
                           ),
                           row(
                               w,
-                              'assets/twitter.svg',
-                              'assets/link.svg',
+                              'assets/twitter.png',
+                              'assets/linkedin.png',
                               widget.studentClass.twitter ?? 'Empty',
-                              widget.studentClass.linkedin ?? 'Empty'),
+                              widget.studentClass.linkedin ?? 'Empty',
+                              () async {
+                            await launch(widget.studentClass.twitter);
+                          }, () async {
+                            await launch(widget.studentClass.linkedin);
+                          }),
                           SizedBox(
                             height: h * 0.03,
                           ),
                           row(
                               w,
-                              'assets/tele.svg',
-                              'assets/email.svg',
+                              'assets/phone-receiver-silhouette.png',
+                              'assets/email.png',
                               widget.studentClass.phone,
-                              widget.studentClass.email),
+                              widget.studentClass.email, () async {
+                            await launch('tel: ${widget.studentClass.phone}');
+                          }, () async {
+                            final Uri params = Uri(
+                              scheme: 'mailto',
+                              path: widget.studentClass.email,
+                            );
+                            String url = params.toString();
+                            await launch(url);
+                          }),
                         ],
                       ),
                     ),
@@ -363,15 +382,29 @@ class _StudentInfo extends State<StudentInfo> {
                                             )
                                           ],
                                         ),
-                                        onTap: () {
+                                        onTap: () async{
+                                             if (f1) {
+                                        f1 = false;
+                                        isLoading = false;
+                                        setState(() {
                                           setState(() {
                                             newItem.sortList(
                                                 index,
                                                 widget.studentClass.id
                                                     .toString());
-                                            newItem.sort =
-                                                newItem.apiSort[index];
+                                            newItem.sort = newItem.apiSort[index];
                                           });
+                                        });
+                                       start(context);
+                                        await newItem
+                                            .getItems(widget.studentClass.id)
+                                            .then((value) {
+                                          setState(() {
+                                            f1 = true;
+                                            isLoading = true;
+                                          });
+                                        });
+                                      }
                                         },
                                       );
                                     }),
@@ -786,39 +819,76 @@ class _StudentInfo extends State<StudentInfo> {
     );
   }
 
-  Widget row(w, svg1, svg2, text1, text2) {
+ 
+  Widget row(
+      w, svg1, svg2, text1, text2, VoidCallback press1, VoidCallback press2) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CircleAvatar(
-          radius: w * 0.05,
-          backgroundColor: Colors.white,
-          child: SvgPicture.asset(svg1),
-        ),
-        SizedBox(
-          width: w * 0.02,
-        ),
-        Expanded(
-          child: Text(
-            text1,
-            style: TextStyle(color: mainColor, fontSize: w * 0.029),
-          ),
-        ),
-        CircleAvatar(
-          radius: w * 0.05,
-          backgroundColor: Colors.white,
-          child: SvgPicture.asset(svg2),
-        ),
-        SizedBox(
-          width: w * 0.02,
-        ),
-        Expanded(
-          child: Text(
-            text2,
-            style: TextStyle(color: mainColor, fontSize: w * 0.029),
-          ),
-        ),
+        (text1 != 'Empty')
+            ? InkWell(
+                onTap: press1,
+                child: CircleAvatar(
+                  radius: w * 0.05,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    svg1,
+                    fit: BoxFit.contain,
+                    color: mainColor,
+                    width: w * 0.05,
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        (text1 != 'Empty')
+            ? SizedBox(
+                width: w * 0.02,
+              )
+            : const SizedBox(),
+        (text1 != 'Empty')
+            ? Expanded(
+                child: InkWell(
+                  onTap: press1,
+                  child: Text(
+                    text1,
+                    style: TextStyle(color: mainColor, fontSize: w * 0.029),
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        (text2 != 'Empty')
+            ? InkWell(
+                onTap: press2,
+                child: CircleAvatar(
+                  radius: w * 0.05,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    svg2,
+                    fit: BoxFit.contain,
+                    color: mainColor,
+                    width: w * 0.05,
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        (text2 != 'Empty')
+            ? SizedBox(
+                width: w * 0.02,
+              )
+            : const SizedBox(),
+        (text2 != 'Empty')
+            ? Expanded(
+                child: InkWell(
+                  onTap: press2,
+                  child: Text(
+                    text2,
+                    style: TextStyle(color: mainColor, fontSize: w * 0.029),
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }
+
 }
