@@ -62,6 +62,7 @@ dependencies:
   date_time_picker: ^2.1.0
   pin_code_fields: any
   cached_network_image: any
+  flutter_local_notifications: any
 
   flutter_localizations:
     sdk: flutter

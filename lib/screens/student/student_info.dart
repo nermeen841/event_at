@@ -4,7 +4,6 @@ import 'package:badges/badges.dart';
 import 'package:davinshi_app/elements/newtwork_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:davinshi_app/lang/change_language.dart';
 import 'package:davinshi_app/models/bottomnav.dart';
@@ -35,8 +34,16 @@ class _StudentInfo extends State<StudentInfo> {
   var currency = (prefs.getString('language_code').toString() == 'en')
       ? prefs.getString('currencyEn').toString()
       : prefs.getString('currencyAr').toString();
+  int currentIndex = 0;
+  late PageController pageController;
+  @override
+  void initState() {
+    pageController = PageController(initialPage: currentIndex);
+    super.initState();
+  }
 
   void start(context) {
+    isLoading = false;
     studentId = widget.studentClass.id;
     var of1 = Provider.of<StudentItemProvider>(context, listen: false);
     of1.getItems(widget.studentClass.id).then((value) {
@@ -80,6 +87,8 @@ class _StudentInfo extends State<StudentInfo> {
   void dispose() {
     super.dispose();
     studentId = 0;
+    _controller.dispose();
+    _controller2.dispose();
   }
 
   @override
@@ -91,7 +100,6 @@ class _StudentInfo extends State<StudentInfo> {
       finish = true;
     }
     CartProvider cart = Provider.of<CartProvider>(context, listen: true);
-    // Provider.of<StudentItemProvider>(context, listen: true);
     return Directionality(
       textDirection: getDirection(),
       child: Scaffold(
@@ -157,7 +165,7 @@ class _StudentInfo extends State<StudentInfo> {
                           SizedBox(
                             height: h * 0.02,
                           ),
-                             row(
+                          row(
                               w,
                               'assets/facebook-logo.png',
                               'assets/instagram.png',
@@ -331,97 +339,7 @@ class _StudentInfo extends State<StudentInfo> {
                   SizedBox(
                     height: h * 0.01,
                   ),
-                  Material(
-                    elevation: 1,
-                    child: SizedBox(
-                      width: w,
-                      height: h * 0.07,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: h * 0.07,
-                            child: Center(
-                              child: Consumer<StudentItemProvider>(
-                                builder: (context, newItem, _) {
-                                  return DropdownButton<String>(
-                                    isDense: true,
-                                    underline: const SizedBox(),
-                                    iconEnabledColor: mainColor,
-                                    iconDisabledColor: mainColor,
-                                    iconSize: w * 0.08,
-                                    hint: Text(
-                                        translate(context, 'student', 'sort'),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        )),
-                                    items: List.generate(newItem.sorts.length,
-                                        (index) {
-                                      return DropdownMenuItem(
-                                        value: newItem.sorts[index],
-                                        child: Column(
-                                          children: [
-                                            (prefs.getString('language_code') ==
-                                                    'en')
-                                                ? Text(
-                                                    newItem.sorts[index],
-                                                    style: TextStyle(
-                                                      color: Colors.grey[600],
-                                                      fontFamily: 'Tajawal',
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    newItem.sortsAr[index],
-                                                    style: TextStyle(
-                                                      color: Colors.grey[600],
-                                                      fontFamily: 'Tajawal',
-                                                    ),
-                                                  ),
-                                            Divider(
-                                              color: mainColor,
-                                            )
-                                          ],
-                                        ),
-                                        onTap: () async{
-                                             if (f1) {
-                                        f1 = false;
-                                        isLoading = false;
-                                        setState(() {
-                                          setState(() {
-                                            newItem.sortList(
-                                                index,
-                                                widget.studentClass.id
-                                                    .toString());
-                                            newItem.sort = newItem.apiSort[index];
-                                          });
-                                        });
-                                       start(context);
-                                        await newItem
-                                            .getItems(widget.studentClass.id)
-                                            .then((value) {
-                                          setState(() {
-                                            f1 = true;
-                                            isLoading = true;
-                                          });
-                                        });
-                                      }
-                                        },
-                                      );
-                                    }),
-                                    onChanged: (val) {},
-                                    // value: newItem.sort,
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: h * 0.015,
-                  ),
+
                   SizedBox(
                     width: w * 0.95,
                     child: Consumer<StudentItemProvider>(
@@ -583,228 +501,352 @@ class _StudentInfo extends State<StudentInfo> {
                       }
                     }),
                   ),
+                  // SizedBox(
+                  //   height: h * 0.01,
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         translate(context, 'student', 'all_products'),
+                  //         style: TextStyle(
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: w * 0.05,
+                  //           fontFamily: 'Tajawal',
+                  //         ),
+                  //       ),
+                  //       Divider(
+                  //         color: mainColor,
+                  //         thickness: 3,
+                  //         endIndent: 250,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   SizedBox(
-                    height: h * 0.01,
+                    height: h * 0.03,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: w * 0.025),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          translate(context, 'student', 'all_products'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: w * 0.05,
-                            fontFamily: 'Tajawal',
-                          ),
-                        ),
-                        Divider(
-                          color: mainColor,
-                          thickness: 3,
-                          endIndent: 250,
-                        ),
-                      ],
+                  SizedBox(
+                    width: w,
+                    height: h * 0.07,
+                    child: Center(
+                      child: Consumer<StudentItemProvider>(
+                        builder: (context, newItem, _) {
+                          return Center(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: List.generate(
+                                  newItem.sorts.length,
+                                  (index) => buildOrderStatus(
+                                    index: index,
+                                    text:
+                                        (prefs.getString('language_code') == 'en')
+                                            ? newItem.sorts[index]
+                                            : newItem.sortsAr[index],
+                                    press: () async {
+                                      pageController.animateToPage(index,
+                                          duration:
+                                              const Duration(microseconds: 500),
+                                          curve: Curves.fastOutSlowIn);
+                            
+                                      if (f1) {
+                                        f1 = false;
+                                        isLoading = false;
+                                        setState(() {
+                                          setState(() {
+                                            newItem.sortList(
+                                                index,
+                                                widget.studentClass.id
+                                                    .toString());
+                                            newItem.sort = newItem.apiSort[index];
+                                          });
+                                        });
+                                       start(context);
+                                        await newItem
+                                            .getItems(widget.studentClass.id)
+                                            .then((value) {
+                                          setState(() {
+                                            f1 = true;
+                                            isLoading = true;
+                                          });
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                          // return DropdownButton<String>(
+                          //   isDense: true,
+                          //   underline: const SizedBox(),
+                          //   iconEnabledColor: mainColor,
+                          //   iconDisabledColor: mainColor,
+                          //   iconSize: w * 0.08,
+                          //   hint: Text(
+                          //       translate(context, 'student', 'sort'),
+                          //       style: const TextStyle(
+                          //         color: Colors.black,
+                          //       )),
+                          //   items: List.generate(newItem.sorts.length,
+                          //       (index) {
+                          //     return DropdownMenuItem(
+                          //       value: newItem.sorts[index],
+                          //       child: Column(
+                          //         children: [
+                          //           (prefs.getString('language_code') ==
+                          //                   'en')
+                          //               ? Text(
+                          //                   newItem.sorts[index],
+                          //                   style: TextStyle(
+                          //                     color: Colors.grey[600],
+                          //                     fontFamily: 'Tajawal',
+                          //                   ),
+                          //                 )
+                          //               : Text(
+                          //                   newItem.sortsAr[index],
+                          //                   style: TextStyle(
+                          //                     color: Colors.grey[600],
+                          //                     fontFamily: 'Tajawal',
+                          //                   ),
+                          //                 ),
+                          //           Divider(
+                          //             color: mainColor,
+                          //           )
+                          //         ],
+                          //       ),
+                          //       onTap: () {
+                          //         setState(() {
+                          //           newItem.sortList(
+                          //               index,
+                          //               widget.studentClass.id
+                          //                   .toString());
+                          //           newItem.sort =
+                          //               newItem.apiSort[index];
+                          //         });
+                          //       },
+                          //     );
+                          //   }),
+                          //   onChanged: (val) {},
+                          //   // value: newItem.sort,
+                          // );
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: h * 0.03,
+                    height: h * 0.02,
                   ),
                   SizedBox(
                     width: w * 0.95,
                     height: h,
                     child: Consumer<StudentItemProvider>(
                         builder: (context, item, _) {
-                      if (!isLoading) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: h * 0.3),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: mainColor,
-                            ),
-                          ),
-                        );
-                      } else {
-                        if (item.items.isEmpty || item.items.isEmpty) {
-                          return SizedBox(
-                            width: w,
-                            height: h * 0.5,
-                            child: Center(
-                              child: Text(
-                                translate(context, 'empty', 'no_products'),
-                                style: TextStyle(
-                                    color: mainColor, fontSize: w * 0.05),
-                              ),
-                            ),
-                          );
-                        } else {
-                          return GridView.builder(
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: h * 0.001,
-                                      mainAxisSpacing: w * 0.05,
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 0.8),
-                              itemCount: item.items.length,
-                              itemBuilder: (context, i) {
-                                return InkWell(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        right: i.isOdd ? w * 0.025 : 0,
-                                        bottom: h * 0.02,
-                                        left: i.isOdd ? w * 0.025 : 0),
-                                    child: Container(
-                                      width: w * 0.45,
-                                      height: h * 0.28,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(w * 0.05),
-                                          border: Border.all(
-                                              color: const Color(0xff707070))),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            width: w * 0.45,
-                                            height: h * 0.2,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[200],
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    item.items[i].image),
-                                                fit: BoxFit.fitHeight,
+                      return PageView.builder(
+                          controller: pageController,
+                          itemCount: 4,
+                          physics: const NeverScrollableScrollPhysics(),
+                          onPageChanged: (index) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                          itemBuilder: (context, index) {
+                            if (!isLoading) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: mainColor,
+                                ),
+                              );
+                            } else {
+                              return (item.items.isNotEmpty)
+                                  ? GridView.builder(
+                                      shrinkWrap: true,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisSpacing: h * 0.001,
+                                              mainAxisSpacing: w * 0.05,
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 0.75),
+                                      itemCount: item.items.length,
+                                      itemBuilder: (context, i) {
+                                        return InkWell(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: i.isOdd ? w * 0.025 : 0,
+                                                bottom: h * 0.02,
+                                                left: i.isOdd ? w * 0.025 : 0),
+                                            child: Container(
+                                              width: w * 0.45,
+                                              height: h * 0.35,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 3,
+                                                    blurRadius: 3,
+                                                    offset: const Offset(0, 3),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.45,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: w * 0.02),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  SizedBox(
-                                                    height: h * 0.01,
-                                                  ),
                                                   Container(
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        maxHeight: h * 0.07,
+                                                    width: w * 0.45,
+                                                    height: h * 0.25,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(item
+                                                            .items[i].image),
+                                                        fit: BoxFit.fitHeight,
                                                       ),
-                                                      child: Text(
-                                                          translateString(
-                                                              item.items[i]
-                                                                  .nameEn,
-                                                              item.items[i]
-                                                                  .nameAr),
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  w * 0.035),
-                                                          overflow: TextOverflow
-                                                              .fade)),
-                                                  SizedBox(
-                                                    height: h * 0.005,
+                                                    ),
                                                   ),
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      RichText(
-                                                        text: TextSpan(
-                                                          children: [
-                                                            if (item.items[i]
-                                                                .isSale)
-                                                              TextSpan(
-                                                                  text: getProductprice(
-                                                                      currency:
-                                                                          currency,
-                                                                      productPrice: item
+                                                  SizedBox(
+                                                    width: w * 0.45,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  w * 0.02),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          SizedBox(
+                                                            height: h * 0.01,
+                                                          ),
+                                                          Container(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                maxHeight:
+                                                                    h * 0.07,
+                                                              ),
+                                                              child: Text(
+                                                                  translateString(
+                                                                      item
                                                                           .items[
                                                                               i]
-                                                                          .salePrice!),
+                                                                          .nameEn,
+                                                                      item
+                                                                          .items[
+                                                                              i]
+                                                                          .nameAr),
                                                                   style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Tajawal',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          mainColor)),
-                                                            if (!item.items[i].isSale)
-                                                              TextSpan(
-                                                                  text: getProductprice(
-                                                                      currency:
-                                                                          currency,
-                                                                      productPrice: item
+                                                                      fontSize: w *
+                                                                          0.035),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .fade)),
+                                                          SizedBox(
+                                                            height: h * 0.005,
+                                                          ),
+                                                          Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    if (item
+                                                                        .items[
+                                                                            i]
+                                                                        .isSale)
+                                                                      TextSpan(
+                                                                          text: getProductprice(
+                                                                              currency: currency,
+                                                                              productPrice: item.items[i].salePrice!),
+                                                                          style: TextStyle(fontFamily: 'Tajawal', fontWeight: FontWeight.bold, color: mainColor)),
+                                                                    if (!item
+                                                                        .items[
+                                                                            i]
+                                                                        .isSale)
+                                                                      TextSpan(
+                                                                          text: getProductprice(
+                                                                              currency: currency,
+                                                                              productPrice: item.items[i].price),
+                                                                          style: TextStyle(fontFamily: 'Tajawal', fontWeight: FontWeight.bold, color: mainColor)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          if (item
+                                                              .items[i].isSale)
+                                                            Text(
+                                                              getProductprice(
+                                                                  currency:
+                                                                      currency,
+                                                                  productPrice:
+                                                                      item
                                                                           .items[
                                                                               i]
                                                                           .price),
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Tajawal',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          mainColor)),
-                                                          ],
-                                                        ),
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      w * 0.035,
+                                                                  fontFamily:
+                                                                      'Tajawal',
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  decorationColor:
+                                                                      mainColor,
+                                                                  decorationThickness:
+                                                                      20),
+                                                            ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
-                                                  if (item.items[i].isSale)
-                                                    Text(
-                                                      getProductprice(
-                                                          currency: currency,
-                                                          productPrice: item
-                                                              .items[i].price),
-                                                      style: TextStyle(
-                                                          fontSize: w * 0.035,
-                                                          fontFamily: 'Tajawal',
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough,
-                                                          color: Colors.grey,
-                                                          decorationColor:
-                                                              mainColor,
-                                                          decorationThickness:
-                                                              20),
                                                     ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           ),
-                                        ],
+                                          onTap: () {
+                                           
+                                            navP(
+                                                context,
+                                                Products(
+                                                  fromFav: false,
+                                                  productId: item.items[i].id,
+                                                  brandId: widget.studentClass.id,
+                                                ));
+                                          },
+                                        );
+                                      })
+                                  : SizedBox(
+                                      width: w,
+                                      height: h * 0.5,
+                                      child: Center(
+                                        child: Text(
+                                          translate(
+                                              context, 'empty', 'no_products'),
+                                          style: TextStyle(
+                                              color: mainColor,
+                                              fontSize: w * 0.05),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    navP(
-                                        context,
-                                        Products(
-                                          fromFav: false,
-                                          productId: item.items[i].id,
-                                        ));
-                                  },
-                                );
-                              });
-                          // return Wrap(
-                          //   children: List.generate(item.items.length, (i) {
-
-                          //   }),
-                          // );
-                        }
-                      }
+                                    );
+                            }
+                          });
                     }),
                   ),
                   SizedBox(
@@ -819,7 +861,45 @@ class _StudentInfo extends State<StudentInfo> {
     );
   }
 
- 
+  AnimatedContainer buildOrderStatus(
+      {required int index, required String text, required VoidCallback press}) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+      child: InkWell(
+        onTap: press,
+        child: Container(
+       
+         width: w*0.3,
+          height: h * 0.08,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: const Offset(0, 2)
+              ),
+            ],
+              borderRadius: BorderRadius.circular(w * 0.015),
+              border: Border.all(color: currentIndex == index ? Colors.white : mainColor),
+              color: currentIndex == index ? mainColor : Colors.white),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: w * 0.04,
+                color: currentIndex == index ? Colors.white : Colors.black,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget row(
       w, svg1, svg2, text1, text2, VoidCallback press1, VoidCallback press2) {
     return Row(
@@ -890,5 +970,4 @@ class _StudentInfo extends State<StudentInfo> {
       ],
     );
   }
-
 }

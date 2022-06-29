@@ -3,14 +3,13 @@
 import 'package:davinshi_app/screens/auth/pin_code.dart';
 import 'package:davinshi_app/screens/auth/sign_upScreen.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:davinshi_app/lang/change_language.dart';
 import 'package:davinshi_app/models/bottomnav.dart';
 import 'package:davinshi_app/models/constants.dart';
 import 'package:davinshi_app/models/country.dart';
-import 'package:davinshi_app/screens/auth/reset_pass.dart';
+
 
 class ConfirmPhone extends StatefulWidget {
   const ConfirmPhone({Key? key}) : super(key: key);

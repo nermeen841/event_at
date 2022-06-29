@@ -1,4 +1,4 @@
-package com.multi.multi
+package com.EventAt.EventAt
 
 import io.flutter.embedding.android.FlutterActivity
 
